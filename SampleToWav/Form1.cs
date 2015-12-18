@@ -1,13 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WavDotNet.Core;
 
@@ -66,21 +59,19 @@ namespace SampleToWav
         {
             using (var dialog = new OpenFileDialog {CheckFileExists = true, Filter = "All files|*.*"})
             {
-                if (dialog.ShowDialog(this) == DialogResult.OK)
-                {
-                    _file = dialog.FileName;
-                    textBox1.Text = _file;
-                }
+                if (dialog.ShowDialog(this) != DialogResult.OK) return;
+                _file = dialog.FileName;
+                textBox1.Text = _file;
             }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            uint startOffset = GetInt(textBox3.Text);
-            uint count = GetInt(textBox4.Text);
-            uint samplingRate = GetInt(textBox2.Text);
-            bool linear = comboBox1.SelectedIndex == 0;
-            bool bigEndian = comboBox2.SelectedIndex == 1;
+            var startOffset = GetInt(tbStartOffset.Text);
+            var count = GetInt(tbByteCount.Text);
+            var samplingRate = GetInt(tbSamplingRate.Text);
+            var linear = cbOutputCurve.SelectedIndex == 0;
+            var bigEndian = cbEndianness.SelectedIndex == 1;
 
             using (var dialog = new SaveFileDialog {Filter = "Wave files (*.wav)|*.wav"})
             {
@@ -93,20 +84,13 @@ namespace SampleToWav
 
         private uint GetInt(string text)
         {
-            if (text.StartsWith("0x"))
-            {
-                return Convert.ToUInt32(text, 16);
-            }
-            else
-            {
-                return Convert.ToUInt32(text);
-            }
+            return text.StartsWith("0x") ? Convert.ToUInt32(text, 16) : Convert.ToUInt32(text);
         }
 
-        private void SaveWav(string file, uint startOffset, uint count, string fileName, uint samplingRate, bool linear, bool bigEndian)
+        private static void SaveWav(string file, uint startOffset, uint count, string fileName, uint samplingRate, bool linear, bool bigEndian)
         {
             var samples = new List<ushort>();
-            using (var input = new BinaryReader(new FileStream(_file, FileMode.Open)))
+            using (var input = new BinaryReader(new FileStream(file, FileMode.Open)))
             {
                 if (count > input.BaseStream.Length - startOffset)
                 {
@@ -116,7 +100,7 @@ namespace SampleToWav
                 for (uint i = 0; i < count; ++i)
                 {
                     // Read a byte
-                    byte b = input.ReadByte();
+                    var b = input.ReadByte();
                     // Split it
                     int v1, v2;
                     if (bigEndian)
