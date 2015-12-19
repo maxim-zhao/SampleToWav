@@ -28,160 +28,241 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this._openFileButton = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.comboBox2 = new System.Windows.Forms.ComboBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
+            this._saveFileButton = new System.Windows.Forms.Button();
+            this._samplingRateTextBox = new System.Windows.Forms.TextBox();
+            this._outputCurveCombo = new System.Windows.Forms.ComboBox();
+            this._interpreterCombo = new System.Windows.Forms.ComboBox();
+            this._startOffsetTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this._byteCountTextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this._wholeFileCheckBox = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.groupBox1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // _openFileButton
             // 
-            this.button1.Location = new System.Drawing.Point(13, 13);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(171, 49);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Open file...";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this._openFileButton.Location = new System.Drawing.Point(6, 30);
+            this._openFileButton.Name = "_openFileButton";
+            this._openFileButton.Size = new System.Drawing.Size(171, 40);
+            this._openFileButton.TabIndex = 0;
+            this._openFileButton.Text = "Open file(s)...";
+            this._openFileButton.UseVisualStyleBackColor = true;
+            this._openFileButton.Click += new System.EventHandler(this.openFileButton_Click);
             // 
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(191, 13);
+            this.textBox1.Location = new System.Drawing.Point(203, 35);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(600, 31);
-            this.textBox1.TabIndex = 1;
+            this.textBox1.Size = new System.Drawing.Size(354, 31);
+            this.textBox1.TabIndex = 0;
             // 
-            // button2
+            // _saveFileButton
             // 
-            this.button2.Location = new System.Drawing.Point(12, 181);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(171, 49);
-            this.button2.TabIndex = 10;
-            this.button2.Text = "Save file...";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this._saveFileButton.Location = new System.Drawing.Point(203, 129);
+            this._saveFileButton.Name = "_saveFileButton";
+            this._saveFileButton.Size = new System.Drawing.Size(171, 40);
+            this._saveFileButton.TabIndex = 4;
+            this._saveFileButton.Text = "Save file(s)";
+            this._saveFileButton.UseVisualStyleBackColor = true;
+            this._saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
             // 
-            // label1
+            // _samplingRateTextBox
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 89);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(190, 25);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Sampling rate (Hz)";
+            this._samplingRateTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._samplingRateTextBox.Location = new System.Drawing.Point(202, 84);
+            this._samplingRateTextBox.Name = "_samplingRateTextBox";
+            this._samplingRateTextBox.Size = new System.Drawing.Size(355, 31);
+            this._samplingRateTextBox.TabIndex = 3;
+            this._samplingRateTextBox.Text = "4000";
             // 
-            // textBox2
+            // _outputCurveCombo
             // 
-            this.textBox2.Location = new System.Drawing.Point(208, 89);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(100, 31);
-            this.textBox2.TabIndex = 3;
-            this.textBox2.Text = "4000";
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this._outputCurveCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._outputCurveCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._outputCurveCombo.FormattingEnabled = true;
+            this._outputCurveCombo.Items.AddRange(new object[] {
             "Linear",
             "Logarithmic"});
-            this.comboBox1.Location = new System.Drawing.Point(12, 133);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(172, 33);
-            this.comboBox1.TabIndex = 8;
+            this._outputCurveCombo.Location = new System.Drawing.Point(202, 37);
+            this._outputCurveCombo.Name = "_outputCurveCombo";
+            this._outputCurveCombo.Size = new System.Drawing.Size(355, 33);
+            this._outputCurveCombo.TabIndex = 1;
             // 
-            // comboBox2
+            // _interpreterCombo
             // 
-            this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox2.FormattingEnabled = true;
-            this.comboBox2.Items.AddRange(new object[] {
-            "Big-endian",
-            "Little-endian"});
-            this.comboBox2.Location = new System.Drawing.Point(190, 133);
-            this.comboBox2.Name = "comboBox2";
-            this.comboBox2.Size = new System.Drawing.Size(281, 33);
-            this.comboBox2.TabIndex = 9;
+            this._interpreterCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._interpreterCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._interpreterCombo.FormattingEnabled = true;
+            this._interpreterCombo.Location = new System.Drawing.Point(202, 211);
+            this._interpreterCombo.Name = "_interpreterCombo";
+            this._interpreterCombo.Size = new System.Drawing.Size(355, 33);
+            this._interpreterCombo.TabIndex = 7;
+            this._interpreterCombo.SelectedIndexChanged += new System.EventHandler(this._interpreterCombo_SelectedIndexChanged);
             // 
-            // textBox3
+            // _startOffsetTextBox
             // 
-            this.textBox3.Location = new System.Drawing.Point(454, 89);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(100, 31);
-            this.textBox3.TabIndex = 5;
-            this.textBox3.Text = "0x0000";
+            this._startOffsetTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._startOffsetTextBox.Location = new System.Drawing.Point(202, 121);
+            this._startOffsetTextBox.Name = "_startOffsetTextBox";
+            this._startOffsetTextBox.Size = new System.Drawing.Size(355, 31);
+            this._startOffsetTextBox.TabIndex = 3;
+            this._startOffsetTextBox.Text = "0x000000";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(332, 92);
+            this.label2.Location = new System.Drawing.Point(6, 124);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(116, 25);
-            this.label2.TabIndex = 4;
+            this.label2.TabIndex = 2;
             this.label2.Text = "Start offset";
             // 
-            // textBox4
+            // _byteCountTextBox
             // 
-            this.textBox4.Location = new System.Drawing.Point(653, 83);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(100, 31);
-            this.textBox4.TabIndex = 7;
-            this.textBox4.Text = "262144";
+            this._byteCountTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._byteCountTextBox.Location = new System.Drawing.Point(202, 166);
+            this._byteCountTextBox.Name = "_byteCountTextBox";
+            this._byteCountTextBox.Size = new System.Drawing.Size(355, 31);
+            this._byteCountTextBox.TabIndex = 5;
+            this._byteCountTextBox.Text = "0xffffff";
             // 
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(569, 92);
+            this.label3.Location = new System.Drawing.Point(6, 169);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(78, 25);
-            this.label3.TabIndex = 6;
+            this.label3.TabIndex = 4;
             this.label3.Text = "Length";
+            // 
+            // _wholeFileCheckBox
+            // 
+            this._wholeFileCheckBox.AutoSize = true;
+            this._wholeFileCheckBox.Location = new System.Drawing.Point(10, 84);
+            this._wholeFileCheckBox.Name = "_wholeFileCheckBox";
+            this._wholeFileCheckBox.Size = new System.Drawing.Size(139, 29);
+            this._wholeFileCheckBox.TabIndex = 1;
+            this._wholeFileCheckBox.Text = "Whole file";
+            this._wholeFileCheckBox.UseVisualStyleBackColor = true;
+            this._wholeFileCheckBox.CheckedChanged += new System.EventHandler(this.wholeFileCheckBox_CheckedChanged);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this._openFileButton);
+            this.groupBox1.Controls.Add(this._byteCountTextBox);
+            this.groupBox1.Controls.Add(this._interpreterCombo);
+            this.groupBox1.Controls.Add(this._wholeFileCheckBox);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Controls.Add(this.textBox1);
+            this.groupBox1.Controls.Add(this._startOffsetTextBox);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Location = new System.Drawing.Point(12, 16);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(563, 260);
+            this.groupBox1.TabIndex = 0;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Input";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(6, 214);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(123, 25);
+            this.label5.TabIndex = 6;
+            this.label5.Text = "Data format";
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label4);
+            this.groupBox2.Controls.Add(this._outputCurveCombo);
+            this.groupBox2.Controls.Add(this._saveFileButton);
+            this.groupBox2.Controls.Add(this._samplingRateTextBox);
+            this.groupBox2.Controls.Add(this.label6);
+            this.groupBox2.Location = new System.Drawing.Point(12, 282);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(563, 177);
+            this.groupBox2.TabIndex = 1;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Output";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(6, 40);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(69, 25);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Curve";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(6, 87);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(190, 25);
+            this.label6.TabIndex = 2;
+            this.label6.Text = "Sampling rate (Hz)";
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(803, 286);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.comboBox2);
-            this.Controls.Add(this.comboBox1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.ClientSize = new System.Drawing.Size(587, 471);
+            this.Controls.Add(this.groupBox2);
+            this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.ShowIcon = false;
+            this.Text = "Sample to WAV converter";
+            this.Load += new System.EventHandler(this.Form1_Load);
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button _openFileButton;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ComboBox comboBox2;
-        private System.Windows.Forms.TextBox textBox3;
+        private System.Windows.Forms.Button _saveFileButton;
+        private System.Windows.Forms.TextBox _samplingRateTextBox;
+        private System.Windows.Forms.ComboBox _outputCurveCombo;
+        private System.Windows.Forms.ComboBox _interpreterCombo;
+        private System.Windows.Forms.TextBox _startOffsetTextBox;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox _byteCountTextBox;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.CheckBox _wholeFileCheckBox;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
     }
 }
 
