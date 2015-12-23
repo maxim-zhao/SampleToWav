@@ -6,7 +6,7 @@ namespace SampleToWav
 {
     interface IValueToSample
     {
-        IEnumerable<ushort> ValuesToSamples(IEnumerable<int> values);
+        IEnumerable<double> ValuesToSamples(IEnumerable<int> values);
     }
 
     /// <summary>
@@ -14,29 +14,29 @@ namespace SampleToWav
     /// </summary>
     class PSGVolumeToSampleLog : IValueToSample
     {
-        internal static readonly ushort[] Lookup =
+        internal static readonly double[] Lookup =
         {
             0,
-            (ushort)(65535*Math.Pow(10.0, -0.1*14)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*13)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*12)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*11)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*10)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*9)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*8)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*7)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*6)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*5)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*4)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*3)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*2)),
-            (ushort)(65535*Math.Pow(10.0, -0.1*1)),
-            65535
+            Math.Pow(10.0, -0.1*14),
+            Math.Pow(10.0, -0.1*13),
+            Math.Pow(10.0, -0.1*12),
+            Math.Pow(10.0, -0.1*11),
+            Math.Pow(10.0, -0.1*10),
+            Math.Pow(10.0, -0.1*9),
+            Math.Pow(10.0, -0.1*8),
+            Math.Pow(10.0, -0.1*7),
+            Math.Pow(10.0, -0.1*6),
+            Math.Pow(10.0, -0.1*5),
+            Math.Pow(10.0, -0.1*4),
+            Math.Pow(10.0, -0.1*3),
+            Math.Pow(10.0, -0.1*2),
+            Math.Pow(10.0, -0.1*1),
+            1.0
         };
 
-        public IEnumerable<ushort> ValuesToSamples(IEnumerable<int> values)
+        public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
-            return values.Select(value => Lookup[value]);
+            return values.Select(value => Lookup[value & 0xf]);
         }
 
         public override string ToString()
@@ -50,29 +50,29 @@ namespace SampleToWav
     /// </summary>
     class PSGVolumeToSampleLinear : IValueToSample
     {
-        private static readonly ushort[] Lookup =
+        private static readonly double[] Lookup =
         {
-            65535*0/15,
-            65535*1/15,
-            65535*2/15,
-            65535*3/15,
-            65535*4/15,
-            65535*5/15,
-            65535*6/15,
-            65535*7/15,
-            65535*8/15,
-            65535*9/15,
-            65535*11/15,
-            65535*12/15,
-            65535*13/15,
-            65535*14/15,
-            65535*14/15,
-            65535*15/15
+            0.0/15.0,
+            1.0/15.0,
+            2.0/15.0,
+            3.0/15.0,
+            4.0/15.0,
+            5.0/15.0,
+            6.0/15.0,
+            7.0/15.0,
+            8.0/15.0,
+            9.0/15.0,
+            10.0/15.0,
+            11.0/15.0,
+            12.0/15.0,
+            13.0/15.0,
+            14.0/15.0,
+            15.0/15.0
         };
 
-        public IEnumerable<ushort> ValuesToSamples(IEnumerable<int> values)
+        public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
-            return values.Select(value => Lookup[value]);
+            return values.Select(value => Lookup[value & 0xf]);
         }
 
         public override string ToString()
@@ -86,15 +86,14 @@ namespace SampleToWav
     /// </summary>
     class EightBitSignedToSample : IValueToSample
     {
-        public IEnumerable<ushort> ValuesToSamples(IEnumerable<int> values)
+        public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
-            // Extend from 8 to 16 bits
-            return values.Select(value => (ushort) (value << 8 | value));
+            return values.Select(value => (double) (value & 0xff)/255.0);
         }
 
         public override string ToString()
         {
-            return "Convert to 16-bit";
+            return "Convert to 16-bit, linear";
         }
     }
 
@@ -103,9 +102,9 @@ namespace SampleToWav
     /// </summary>
     class EightBitSignedTopNibbleToLogSample : IValueToSample
     {
-        public IEnumerable<ushort> ValuesToSamples(IEnumerable<int> values)
+        public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
-            return values.Select(value => PSGVolumeToSampleLog.Lookup[value >> 4]);
+            return values.Select(value => PSGVolumeToSampleLog.Lookup[(value >> 4) & 0xf]);
         }
 
         public override string ToString()

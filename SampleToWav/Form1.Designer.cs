@@ -42,6 +42,8 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this._sampleDepthCombo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
@@ -70,10 +72,10 @@
             // 
             // _saveFileButton
             // 
-            this._saveFileButton.Location = new System.Drawing.Point(203, 129);
+            this._saveFileButton.Location = new System.Drawing.Point(203, 176);
             this._saveFileButton.Name = "_saveFileButton";
             this._saveFileButton.Size = new System.Drawing.Size(171, 40);
-            this._saveFileButton.TabIndex = 4;
+            this._saveFileButton.TabIndex = 6;
             this._saveFileButton.Text = "Save file(s)";
             this._saveFileButton.UseVisualStyleBackColor = true;
             this._saveFileButton.Click += new System.EventHandler(this.saveFileButton_Click);
@@ -94,9 +96,6 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._outputCurveCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this._outputCurveCombo.FormattingEnabled = true;
-            this._outputCurveCombo.Items.AddRange(new object[] {
-            "Linear",
-            "Logarithmic"});
             this._outputCurveCombo.Location = new System.Drawing.Point(202, 37);
             this._outputCurveCombo.Name = "_outputCurveCombo";
             this._outputCurveCombo.Size = new System.Drawing.Size(355, 33);
@@ -196,6 +195,8 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this._sampleDepthCombo);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this._outputCurveCombo);
             this.groupBox2.Controls.Add(this._saveFileButton);
@@ -203,10 +204,30 @@
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Location = new System.Drawing.Point(12, 282);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(563, 177);
+            this.groupBox2.Size = new System.Drawing.Size(563, 234);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 132);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(144, 25);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Sample depth";
+            // 
+            // _sampleDepthCombo
+            // 
+            this._sampleDepthCombo.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this._sampleDepthCombo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this._sampleDepthCombo.FormattingEnabled = true;
+            this._sampleDepthCombo.Location = new System.Drawing.Point(202, 129);
+            this._sampleDepthCombo.Name = "_sampleDepthCombo";
+            this._sampleDepthCombo.Size = new System.Drawing.Size(355, 33);
+            this._sampleDepthCombo.TabIndex = 5;
             // 
             // label4
             // 
@@ -230,7 +251,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 471);
+            this.ClientSize = new System.Drawing.Size(587, 534);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -263,6 +284,8 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox _sampleDepthCombo;
     }
 }
 
