@@ -53,6 +53,7 @@ namespace SampleToWav
                     if (dialog.ShowDialog(this) == DialogResult.OK)
                     {
                         SaveWav(_files[0], startOffset, count, dialog.FileName, samplingRate, interpreter, sampleGenerator, wavWriter);
+                        MessageBox.Show(this, "Save complete");
                     }
                 }
             }
@@ -62,9 +63,8 @@ namespace SampleToWav
                 {
                     SaveWav(file, startOffset, count, file + ".wav", samplingRate, interpreter, sampleGenerator, wavWriter);
                 }
+                MessageBox.Show(this, "Save complete");
             }
-
-            MessageBox.Show("Save complete");
         }
 
         private uint GetInt(string text)
@@ -108,7 +108,9 @@ namespace SampleToWav
             {
                 new FourBitBigEndianInterpreter(),
                 new FourBitLittleEndianInterpreter(),
-                new EightBitUnsgnedInterpreter()
+                new EightBitUnsignedInterpreter(),
+                new OneBitBigEndianPdmInterpreter(),
+                new OneBitLittleEndianPdmInterpreter()
             });
             _interpreterCombo.SelectedIndex = 0;
             _sampleDepthCombo.Items.AddRange(new object[]
@@ -140,8 +142,14 @@ namespace SampleToWav
                 case DataFormat.EightBitUnsigned:
                     _outputCurveCombo.Items.AddRange(new object[]
                     {
-                        new EightBitSignedToSample(),
-                        new EightBitSignedTopNibbleToLogSample()
+                        new EightBitUnsignedToSample(),
+                        new EightBitUnsignedTopNibbleToLogSample()
+                    });
+                    break;
+                case DataFormat.OneBit:
+                    _outputCurveCombo.Items.AddRange(new object[]
+                    {
+                        new OneBitToSample()
                     });
                     break;
             }

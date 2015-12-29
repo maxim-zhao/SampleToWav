@@ -84,7 +84,7 @@ namespace SampleToWav
     /// <summary>
     /// Converts 8-bit unsigned to samples
     /// </summary>
-    class EightBitSignedToSample : IValueToSample
+    class EightBitUnsignedToSample : IValueToSample
     {
         public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
@@ -93,14 +93,14 @@ namespace SampleToWav
 
         public override string ToString()
         {
-            return "Convert to 16-bit, linear";
+            return "Linear";
         }
     }
 
     /// <summary>
     /// Converts 8-bit unsigned to logarithmic PSG volume as if ony the top 4 bits were used
     /// </summary>
-    class EightBitSignedTopNibbleToLogSample : IValueToSample
+    class EightBitUnsignedTopNibbleToLogSample : IValueToSample
     {
         public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
         {
@@ -109,7 +109,20 @@ namespace SampleToWav
 
         public override string ToString()
         {
-            return "Discard low bits, logarithmic";
+            return "Discard low nibble, logarithmic";
+        }
+    }
+
+    class OneBitToSample : IValueToSample
+    {
+        public IEnumerable<double> ValuesToSamples(IEnumerable<int> values)
+        {
+            return values.Select(i => (double)i);
+        }
+
+        public override string ToString()
+        {
+            return "PDM pass-through";
         }
     }
 }

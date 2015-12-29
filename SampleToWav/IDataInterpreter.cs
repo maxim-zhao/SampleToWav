@@ -5,17 +5,29 @@ namespace SampleToWav
 {
     public enum DataFormat
     {
+        /// <summary>
+        /// Needs to be converted to PCM
+        /// </summary>
         PSGVolume,
-        EightBitUnsigned
+
+        /// <summary>
+        /// Raw pass-through
+        /// </summary>
+        EightBitUnsigned,
+
+        /// <summary>
+        /// PDM
+        /// </summary>
+        OneBit
     }
 
-    interface IDataInterpreter
+    internal interface IDataInterpreter
     {
         IEnumerable<int> GetSamples(IEnumerable<byte> data);
         DataFormat OutputFormat { get; }
     }
 
-    class FourBitBigEndianInterpreter : IDataInterpreter
+    internal class FourBitBigEndianInterpreter : IDataInterpreter
     {
         public IEnumerable<int> GetSamples(IEnumerable<byte> data)
         {
@@ -26,7 +38,10 @@ namespace SampleToWav
             }
         }
 
-        public DataFormat OutputFormat { get { return DataFormat.PSGVolume; } }
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.PSGVolume; }
+        }
 
         public override string ToString()
         {
@@ -34,7 +49,7 @@ namespace SampleToWav
         }
     }
 
-    class FourBitLittleEndianInterpreter : IDataInterpreter
+    internal class FourBitLittleEndianInterpreter : IDataInterpreter
     {
         public IEnumerable<int> GetSamples(IEnumerable<byte> data)
         {
@@ -45,7 +60,10 @@ namespace SampleToWav
             }
         }
 
-        public DataFormat OutputFormat { get { return DataFormat.PSGVolume; } }
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.PSGVolume; }
+        }
 
         public override string ToString()
         {
@@ -53,18 +71,81 @@ namespace SampleToWav
         }
     }
 
-    class EightBitUnsgnedInterpreter : IDataInterpreter
+    internal class EightBitUnsignedInterpreter : IDataInterpreter
     {
         public IEnumerable<int> GetSamples(IEnumerable<byte> data)
         {
             return data.Select(b => (int) b);
         }
 
-        public DataFormat OutputFormat { get { return DataFormat.EightBitUnsigned; } }
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.EightBitUnsigned; }
+        }
 
         public override string ToString()
         {
             return "8-bit unsigned";
+        }
+    }
+
+    internal class OneBitBigEndianPdmInterpreter : IDataInterpreter
+    {
+        public IEnumerable<int> GetSamples(IEnumerable<byte> data)
+        {
+            foreach (var value in data)
+            {
+                var b = value;
+                for (int i = 0; i < 8; ++i)
+                {
+                    // Get bit
+                    var bit = b >> 7;
+                    // Shift
+                    b <<= 1;
+                    // Emit it
+                    yield return bit;
+                }
+            }
+        }
+
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.OneBit; }
+        }
+
+        public override string ToString()
+        {
+            return "1-bit PDM (big-endian)";
+        }
+    }
+
+    internal class OneBitLittleEndianPdmInterpreter : IDataInterpreter
+    {
+        public IEnumerable<int> GetSamples(IEnumerable<byte> data)
+        {
+            foreach (var value in data)
+            {
+                var b = value;
+                for (int i = 0; i < 8; ++i)
+                {
+                    // Get bit
+                    var bit = b & 1;
+                    // Shift
+                    b >>= 1;
+                    // Emit it
+                    yield return bit;
+                }
+            }
+        }
+
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.OneBit; }
+        }
+
+        public override string ToString()
+        {
+            return "1-bit PDM (little-endian)";
         }
     }
 }
