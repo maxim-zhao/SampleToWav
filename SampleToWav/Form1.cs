@@ -74,8 +74,7 @@ namespace SampleToWav
 
         private static void SaveWav(string inputFilename, uint startOffset, uint count, string outputFilename, uint samplingRate, IDataInterpreter interpreter, IValueToSample sampleRenderer, IWavWriter writer)
         {
-            using (var fileStream = new FileStream(inputFilename, FileMode.Open))
-            using (var input = new BinaryReader(fileStream))
+            using (var input = new BinaryReader(new FileStream(inputFilename, FileMode.Open)))
             {
                 writer.Encode(
                     outputFilename, 
