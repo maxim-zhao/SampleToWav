@@ -3,6 +3,8 @@ Converts sampled audio data inside ROM files to a WAV file
 
 This is a small program which allows you to convert data stored in binary files (initially targetting ROM images for Sega 8-bit home video game systems) into minimally-adjusted WAV representations of the same data.
 
+![Screenshot](http://i.imgur.com/mAZhVHB.png)
+
 This covers three aspects:
 
 ## Data extraction
