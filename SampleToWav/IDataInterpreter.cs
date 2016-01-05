@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace SampleToWav
@@ -14,6 +15,11 @@ namespace SampleToWav
         /// Raw pass-through
         /// </summary>
         EightBitUnsigned,
+
+        /// <summary>
+        /// Raw pass-through
+        /// </summary>
+        EightBitSigned,
 
         /// <summary>
         /// PDM
@@ -75,7 +81,7 @@ namespace SampleToWav
     {
         public IEnumerable<int> GetSamples(IEnumerable<byte> data)
         {
-            return data.Select(b => (int) b);
+            return data.Select(b => (int)b);
         }
 
         public DataFormat OutputFormat
@@ -86,6 +92,24 @@ namespace SampleToWav
         public override string ToString()
         {
             return "8-bit unsigned";
+        }
+    }
+
+    internal class EightBitSignedInterpreter : IDataInterpreter
+    {
+        public IEnumerable<int> GetSamples(IEnumerable<byte> data)
+        {
+            return data.Select(b => (sbyte)b + 128);
+        }
+
+        public DataFormat OutputFormat
+        {
+            get { return DataFormat.EightBitUnsigned; }
+        }
+
+        public override string ToString()
+        {
+            return "8-bit signed";
         }
     }
 

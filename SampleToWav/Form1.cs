@@ -43,7 +43,7 @@ namespace SampleToWav
             if (_wholeFileCheckBox.Checked)
             {
                 startOffset = 0;
-                count = Int32.MaxValue;
+                count = int.MaxValue;
             }
 
             if (_files.Count == 1)
@@ -108,6 +108,7 @@ namespace SampleToWav
                 new FourBitBigEndianInterpreter(),
                 new FourBitLittleEndianInterpreter(),
                 new EightBitUnsignedInterpreter(),
+                new EightBitSignedInterpreter(),
                 new OneBitBigEndianPdmInterpreter(),
                 new OneBitLittleEndianPdmInterpreter()
             });
