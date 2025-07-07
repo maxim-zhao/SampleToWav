@@ -42,10 +42,17 @@
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.label5 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this._previewButton = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this._sampleDepthCombo = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button3 = new System.Windows.Forms.Button();
+            this.button4 = new System.Windows.Forms.Button();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -195,6 +202,7 @@
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.groupBox2.Controls.Add(this._previewButton);
             this.groupBox2.Controls.Add(this.label1);
             this.groupBox2.Controls.Add(this._sampleDepthCombo);
             this.groupBox2.Controls.Add(this.label4);
@@ -208,6 +216,18 @@
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
+            // 
+            // _previewButton
+            // 
+            this._previewButton.Appearance = System.Windows.Forms.Appearance.Button;
+            this._previewButton.Location = new System.Drawing.Point(381, 176);
+            this._previewButton.Name = "_previewButton";
+            this._previewButton.Size = new System.Drawing.Size(176, 40);
+            this._previewButton.TabIndex = 7;
+            this._previewButton.Text = "Preview";
+            this._previewButton.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this._previewButton.UseVisualStyleBackColor = true;
+            this._previewButton.CheckedChanged += new System.EventHandler(this._previewButton_CheckedChanged);
             // 
             // label1
             // 
@@ -247,11 +267,64 @@
             this.label6.TabIndex = 2;
             this.label6.Text = "Sampling rate (Hz)";
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(12, 531);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(162, 73);
+            this.button1.TabIndex = 2;
+            this.button1.Text = "4-bit convert";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(180, 531);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(162, 73);
+            this.button2.TabIndex = 3;
+            this.button2.Text = "PDM convert";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // button3
+            // 
+            this.button3.Location = new System.Drawing.Point(348, 531);
+            this.button3.Name = "button3";
+            this.button3.Size = new System.Drawing.Size(162, 73);
+            this.button3.TabIndex = 4;
+            this.button3.Text = "1-bit convert";
+            this.button3.UseVisualStyleBackColor = true;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
+            // 
+            // button4
+            // 
+            this.button4.Location = new System.Drawing.Point(12, 610);
+            this.button4.Name = "button4";
+            this.button4.Size = new System.Drawing.Size(162, 73);
+            this.button4.TabIndex = 5;
+            this.button4.Text = "Batch";
+            this.button4.UseVisualStyleBackColor = true;
+            this.button4.Click += new System.EventHandler(this.batchButton_Click);
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Multiselect = true;
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "Wave files (*.wav)|*.wav";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 534);
+            this.ClientSize = new System.Drawing.Size(587, 694);
+            this.Controls.Add(this.button4);
+            this.Controls.Add(this.button3);
+            this.Controls.Add(this.button2);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -286,6 +359,13 @@
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox _sampleDepthCombo;
+        private System.Windows.Forms.CheckBox _previewButton;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
     }
 }
 

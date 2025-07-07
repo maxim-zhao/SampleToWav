@@ -5,15 +5,14 @@ using WavDotNet.Core;
 
 namespace SampleToWav
 {
-    // Wav.Net does conversion in a way that screws up :( so I had to roll my own - sort of, I don't just convert because its easier this way.
+    // Wav.Net does conversion in a way that screws up :( so I had to roll my own that correctly handles values like 1.0.
     interface IWavWriter
     {
-        void Encode(string fileName, uint samplingRate, IEnumerable<double> samples);
+        void Encode(string fileName, uint samplingRate, IEnumerable<float> samples);
     }
-
     class EightBitWavWriter : IWavWriter
     {
-        public void Encode(string fileName, uint samplingRate, IEnumerable<double> samples)
+        public void Encode(string fileName, uint samplingRate, IEnumerable<float> samples)
         {
             using (var output = new WavWrite<byte>(fileName, samplingRate, WavFormat.Pcm, 8, 8))
             {
@@ -30,7 +29,7 @@ namespace SampleToWav
 
     class SixteenBitWavWriter : IWavWriter
     {
-        public void Encode(string fileName, uint samplingRate, IEnumerable<double> samples)
+        public void Encode(string fileName, uint samplingRate, IEnumerable<float> samples)
         {
             using (var output = new WavWrite<short>(fileName, samplingRate, WavFormat.Pcm, 16, 16))
             {
@@ -47,11 +46,12 @@ namespace SampleToWav
 
     class FloatWavWriter : IWavWriter
     {
-        public void Encode(string fileName, uint samplingRate, IEnumerable<double> samples)
+        public void Encode(string fileName, uint samplingRate, IEnumerable<float> samples)
         {
             using (var output = new WavWrite<float>(fileName, samplingRate, WavFormat.FloatingPoint, 64, 64))
             {
-                output.AudioData.Add(new Channel<float>(new Samples<float>(samples.Select(x => (float)(x * 2.0 - 1.0))), ChannelPositions.Mono));
+                // Convert from [0..1] to [-1..+1]
+                output.AudioData.Add(new Channel<float>(new Samples<float>(samples.Select(x => x * 2 - 1)), ChannelPositions.Mono));
                 output.Flush();
             }
         }
