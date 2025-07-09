@@ -53,8 +53,14 @@
             this.button4 = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.tabControl1.SuspendLayout();
+            this.tabPage1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _openFileButton
@@ -74,7 +80,7 @@
             this.textBox1.Location = new System.Drawing.Point(203, 35);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(354, 31);
+            this.textBox1.Size = new System.Drawing.Size(1143, 31);
             this.textBox1.TabIndex = 0;
             // 
             // _saveFileButton
@@ -93,7 +99,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._samplingRateTextBox.Location = new System.Drawing.Point(202, 84);
             this._samplingRateTextBox.Name = "_samplingRateTextBox";
-            this._samplingRateTextBox.Size = new System.Drawing.Size(355, 31);
+            this._samplingRateTextBox.Size = new System.Drawing.Size(1144, 31);
             this._samplingRateTextBox.TabIndex = 3;
             this._samplingRateTextBox.Text = "4000";
             // 
@@ -105,7 +111,7 @@
             this._outputCurveCombo.FormattingEnabled = true;
             this._outputCurveCombo.Location = new System.Drawing.Point(202, 37);
             this._outputCurveCombo.Name = "_outputCurveCombo";
-            this._outputCurveCombo.Size = new System.Drawing.Size(355, 33);
+            this._outputCurveCombo.Size = new System.Drawing.Size(1144, 33);
             this._outputCurveCombo.TabIndex = 1;
             // 
             // _interpreterCombo
@@ -116,7 +122,7 @@
             this._interpreterCombo.FormattingEnabled = true;
             this._interpreterCombo.Location = new System.Drawing.Point(202, 211);
             this._interpreterCombo.Name = "_interpreterCombo";
-            this._interpreterCombo.Size = new System.Drawing.Size(355, 33);
+            this._interpreterCombo.Size = new System.Drawing.Size(1144, 33);
             this._interpreterCombo.TabIndex = 7;
             this._interpreterCombo.SelectedIndexChanged += new System.EventHandler(this._interpreterCombo_SelectedIndexChanged);
             // 
@@ -126,7 +132,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._startOffsetTextBox.Location = new System.Drawing.Point(202, 121);
             this._startOffsetTextBox.Name = "_startOffsetTextBox";
-            this._startOffsetTextBox.Size = new System.Drawing.Size(355, 31);
+            this._startOffsetTextBox.Size = new System.Drawing.Size(1144, 31);
             this._startOffsetTextBox.TabIndex = 3;
             this._startOffsetTextBox.Text = "0x000000";
             // 
@@ -145,7 +151,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this._byteCountTextBox.Location = new System.Drawing.Point(202, 166);
             this._byteCountTextBox.Name = "_byteCountTextBox";
-            this._byteCountTextBox.Size = new System.Drawing.Size(355, 31);
+            this._byteCountTextBox.Size = new System.Drawing.Size(1144, 31);
             this._byteCountTextBox.TabIndex = 5;
             this._byteCountTextBox.Text = "0xffffff";
             // 
@@ -182,9 +188,9 @@
             this.groupBox1.Controls.Add(this.textBox1);
             this.groupBox1.Controls.Add(this._startOffsetTextBox);
             this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Location = new System.Drawing.Point(12, 16);
+            this.groupBox1.Location = new System.Drawing.Point(20, 6);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(563, 260);
+            this.groupBox1.Size = new System.Drawing.Size(1352, 260);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Input";
@@ -210,9 +216,9 @@
             this.groupBox2.Controls.Add(this._saveFileButton);
             this.groupBox2.Controls.Add(this._samplingRateTextBox);
             this.groupBox2.Controls.Add(this.label6);
-            this.groupBox2.Location = new System.Drawing.Point(12, 282);
+            this.groupBox2.Location = new System.Drawing.Point(20, 272);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(563, 234);
+            this.groupBox2.Size = new System.Drawing.Size(1352, 234);
             this.groupBox2.TabIndex = 1;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Output";
@@ -246,7 +252,7 @@
             this._sampleDepthCombo.FormattingEnabled = true;
             this._sampleDepthCombo.Location = new System.Drawing.Point(202, 129);
             this._sampleDepthCombo.Name = "_sampleDepthCombo";
-            this._sampleDepthCombo.Size = new System.Drawing.Size(355, 33);
+            this._sampleDepthCombo.Size = new System.Drawing.Size(1144, 33);
             this._sampleDepthCombo.TabIndex = 5;
             // 
             // label4
@@ -269,7 +275,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(12, 531);
+            this.button1.Location = new System.Drawing.Point(6, 6);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(162, 73);
             this.button1.TabIndex = 2;
@@ -279,7 +285,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(180, 531);
+            this.button2.Location = new System.Drawing.Point(174, 6);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(162, 73);
             this.button2.TabIndex = 3;
@@ -289,7 +295,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(348, 531);
+            this.button3.Location = new System.Drawing.Point(342, 6);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(162, 73);
             this.button3.TabIndex = 4;
@@ -299,7 +305,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(12, 610);
+            this.button4.Location = new System.Drawing.Point(20, 512);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(162, 73);
             this.button4.TabIndex = 5;
@@ -316,17 +322,49 @@
             // 
             this.saveFileDialog1.Filter = "Wave files (*.wav)|*.wav";
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Location = new System.Drawing.Point(0, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(1400, 962);
+            this.tabControl1.TabIndex = 6;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.button4);
+            this.tabPage1.Controls.Add(this.groupBox2);
+            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(1384, 915);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "ROM to WAV";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.button1);
+            this.tabPage2.Controls.Add(this.button2);
+            this.tabPage2.Controls.Add(this.button3);
+            this.tabPage2.Location = new System.Drawing.Point(8, 39);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(1019, 228);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "WAV to data";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(587, 694);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.groupBox2);
-            this.Controls.Add(this.groupBox1);
+            this.ClientSize = new System.Drawing.Size(1400, 962);
+            this.Controls.Add(this.tabControl1);
             this.Name = "Form1";
             this.ShowIcon = false;
             this.Text = "Sample to WAV converter";
@@ -335,6 +373,9 @@
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -366,6 +407,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.SaveFileDialog saveFileDialog1;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }
 

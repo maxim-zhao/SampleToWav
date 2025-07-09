@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
-using WavDotNet;
 
 namespace SampleToWav
 {
@@ -82,8 +81,9 @@ namespace SampleToWav
 
         private static void SaveWav(string inputFilename, uint startOffset, uint count, string outputFilename, uint samplingRate, IDataInterpreter interpreter, IValueToSample sampleRenderer, IWavWriter writer)
         {
-            using (var input = new BinaryReader(new FileStream(inputFilename, FileMode.Open)))
+            try
             {
+                using var input = new BinaryReader(new FileStream(inputFilename, FileMode.Open));
                 writer.Encode(
                     outputFilename, 
                     samplingRate, 
@@ -93,6 +93,10 @@ namespace SampleToWav
                                 input, 
                                 startOffset, 
                                 count))));
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show($"Exception decoding {inputFilename} at {startOffset:x}\n" + e.StackTrace, e.Message);
             }
         }
 
@@ -120,7 +124,9 @@ namespace SampleToWav
                 new OneBitLittleEndianPdmInterpreter(),
                 new ChakanLZLittleEndian4BitInterpreter(),
                 new FourBitSignedInterpreter(), 
-                new RLEFourBitBigEndianInterpreter()
+                new RLEFourBitBigEndianInterpreter(),
+                new LZFourBitBigEndianInterpreter(),
+                new LZFourBitBigEndianInterpreterNoLength()
             ]);
             _interpreterCombo.SelectedIndex = 0;
             _sampleDepthCombo.Items.AddRange([
@@ -163,7 +169,7 @@ namespace SampleToWav
             _outputCurveCombo.SelectedIndex = 0;
         }
 
-        class PreviewSampleProvider : ISampleProvider
+        private class PreviewSampleProvider : ISampleProvider
         {
             private readonly IEnumerator<float> _samples;
 
@@ -237,15 +243,14 @@ namespace SampleToWav
                 var f = new WaveFormatConversionStream(
                     new WaveFormat(input.WaveFormat.SampleRate, 8, 1), input);
                 var outputFilename = filename + ".4bitraw";
-                using (var output = new FileStream(outputFilename, FileMode.Create))
+                using var output = new FileStream(outputFilename, FileMode.Create);
+                var high = true;
+                byte value = 0;
+                var buffer = new byte[f.Length];
+                f.Read(buffer, 0, (int)f.Length);
+                foreach (var sample in buffer)
                 {
-                    var high = true;
-                    byte value = 0;
-                    var buffer = new byte[f.Length];
-                    f.Read(buffer, 0, (int)f.Length);
-                    foreach (var sample in buffer)
-                    {
-                        /*
+                    /*
                         // Convert to 4-bit (dumb)
                         if (high)
                         {
@@ -260,22 +265,21 @@ namespace SampleToWav
                             high = true;
                         }
                         */
-                        // Convert to 4-bit (log)
-                        if (high)
-                        {
-                            value = getValueForSample(sample);
-                            value <<= 4;
-                            high = false;
-                        }
-                        else
-                        {
-                            value |= getValueForSample(sample);
-                            output.WriteByte(value);
-                            high = true;
-                        }
+                    // Convert to 4-bit (log)
+                    if (high)
+                    {
+                        value = getValueForSample(sample);
+                        value <<= 4;
+                        high = false;
                     }
-                    output.Close();
+                    else
+                    {
+                        value |= getValueForSample(sample);
+                        output.WriteByte(value);
+                        high = true;
+                    }
                 }
+                output.Close();
             }
         }
 
@@ -317,32 +321,30 @@ namespace SampleToWav
                 // Open file
                 var samples = File.ReadAllBytes(filename);
                 var outputFilename = filename + ".pdmraw";
-                using (var output = new FileStream(outputFilename, FileMode.Create))
+                using var output = new FileStream(outputFilename, FileMode.Create);
+                var error = 0;
+                var b = 0;
+                var bitCounter = 0;
+                foreach (var sample in samples.Skip(0x2c))
                 {
-                    var error = 0;
-                    var b = 0;
-                    var bitCounter = 0;
-                    foreach (var sample in samples.Skip(0x2c))
+                    // Add the error to the sample to get the new vale
+                    var value = error + sample;
+                    // If it's over 128, emit 1, else emit a 0
+                    var bit = value > 127 ? 1 : 0;
+                    // Emit it
+                    b = (b << 1) + bit;
+                    if (++bitCounter == 8)
                     {
-                        // Add the error to the sample to get the new vale
-                        var value = error + sample;
-                        // If it's over 128, emit 1, else emit a 0
-                        var bit = value > 127 ? 1 : 0;
-                        // Emit it
-                        b = (b << 1) + bit;
-                        if (++bitCounter == 8)
-                        {
-                            output.WriteByte((byte)b);
-                            b = 0;
-                            bitCounter = 0;
-                            // We drop trailing bits
-                        }
-                        // Update the running error
-                        // We wanted value, we emitted (equivalently) 0 or 255
-                        error = value - bit * 255;
+                        output.WriteByte((byte)b);
+                        b = 0;
+                        bitCounter = 0;
+                        // We drop trailing bits
                     }
-                    output.Close();
+                    // Update the running error
+                    // We wanted value, we emitted (equivalently) 0 or 255
+                    error = value - bit * 255;
                 }
+                output.Close();
             }
         }
 
@@ -358,27 +360,25 @@ namespace SampleToWav
                 // Open file
                 var samples = File.ReadAllBytes(filename);
                 var outputFilename = filename + ".1bitraw";
-                using (var output = new FileStream(outputFilename, FileMode.Create))
+                using var output = new FileStream(outputFilename, FileMode.Create);
+                var b = 0;
+                var bitCounter = 0;
+                foreach (var sample in samples.Skip(0x2c))
                 {
-                    var b = 0;
-                    var bitCounter = 0;
-                    foreach (var sample in samples.Skip(0x2c))
+                    // We simply clamp everything
+                    // TODO: silence is not handled well
+                    var bit = sample > 127 ? 1 : 0;
+                    // Emit it
+                    b = (b << 1) + bit;
+                    if (++bitCounter == 8)
                     {
-                        // We simply clamp everything
-                        // TODO: silence is not handled well
-                        var bit = sample > 127 ? 1 : 0;
-                        // Emit it
-                        b = (b << 1) + bit;
-                        if (++bitCounter == 8)
-                        {
-                            output.WriteByte((byte)b);
-                            b = 0;
-                            bitCounter = 0;
-                            // We drop trailing bits
-                        }
+                        output.WriteByte((byte)b);
+                        b = 0;
+                        bitCounter = 0;
+                        // We drop trailing bits
                     }
-                    output.Close();
                 }
+                output.Close();
             }
         }
 

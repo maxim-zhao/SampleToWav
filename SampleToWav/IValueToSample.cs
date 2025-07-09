@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace SampleToWav
 {
-    interface IValueToSample
+    internal interface IValueToSample
     {
         IEnumerable<float> ValuesToSamples(IEnumerable<int> values);
     }
@@ -12,7 +12,7 @@ namespace SampleToWav
     /// <summary>
     /// Converts PSG attenuations to log samples
     /// </summary>
-    class PSGAttenuationToSampleLog : IValueToSample
+    internal class PSGAttenuationToSampleLog : IValueToSample
     {
         internal static readonly float[] Lookup =
         [
@@ -45,7 +45,7 @@ namespace SampleToWav
         }
     }
 
-    class InvertedPSGAttenuationToSampleLog: IValueToSample
+    internal class InvertedPSGAttenuationToSampleLog: IValueToSample
     {
         public IEnumerable<float> ValuesToSamples(IEnumerable<int> values)
         {
@@ -61,7 +61,7 @@ namespace SampleToWav
     /// <summary>
     /// Converts PSG attenuation values to linear samples
     /// </summary>
-    class PSGAttenuationToSampleLinear : IValueToSample
+    internal class PSGAttenuationToSampleLinear : IValueToSample
     {
         private static readonly float[] Lookup =
         [
@@ -97,7 +97,7 @@ namespace SampleToWav
     /// <summary>
     /// Converts 8-bit unsigned to samples
     /// </summary>
-    class EightBitUnsignedToSample : IValueToSample
+    internal class EightBitUnsignedToSample : IValueToSample
     {
         public IEnumerable<float> ValuesToSamples(IEnumerable<int> values)
         {
@@ -113,7 +113,7 @@ namespace SampleToWav
     /// <summary>
     /// Converts 8-bit unsigned to logarithmic PSG volume as if ony the top 4 bits were used
     /// </summary>
-    class EightBitUnsignedTopNibbleToLogSample : IValueToSample
+    internal class EightBitUnsignedTopNibbleToLogSample : IValueToSample
     {
         public IEnumerable<float> ValuesToSamples(IEnumerable<int> values)
         {
@@ -126,7 +126,7 @@ namespace SampleToWav
         }
     }
 
-    class OneBitToSample : IValueToSample
+    internal class OneBitToSample : IValueToSample
     {
         public IEnumerable<float> ValuesToSamples(IEnumerable<int> values)
         {

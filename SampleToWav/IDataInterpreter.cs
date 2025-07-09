@@ -322,6 +322,159 @@ namespace SampleToWav
                 }
             }
 
+            if (uncompressed.Count < 2)
+            {
+                // Some are not used?
+                return [0];
+            }
+
+            // The first two bytes are the length, we truncate to whatever that is.
+            var length = uncompressed[0] + uncompressed[1] * 256;
+
+            data = uncompressed.Skip(2).Take(length);
+
+            // The code uses rld to get the low nibble out (twice), so it is big-endian.
+            return new FourBitBigEndianInterpreter().GetSamples(data);
+        }
+
+        public DataFormat OutputFormat => DataFormat.PSGAttenuation;
+
+        public override string ToString()
+        {
+            return "4-bit RLE (Madou Monogatari I)";
+        }
+    }
+
+    public class LZFourBitBigEndianInterpreter : IDataInterpreter
+    {
+        public IEnumerable<int> GetSamples(IEnumerable<byte> data)
+        {
+            // We decompress to another list, and then unpack that
+            var uncompressed = new List<byte>();
+
+            var compressed = data.ToList(); // So we can index into it
+            var offset = 0;
+
+            while (offset < compressed.Count)
+            {
+                // Get a byte
+                var b = compressed[offset++];
+                // Check for raw or LZ, or end
+                if (b == 0)
+                {
+                    break;
+                }
+                
+                if (b < 0x80)
+                {
+                    // Raw: copy that many bytes
+                    for (var i = 0; i < b; i++)
+                    {
+                        uncompressed.Add(compressed[offset++]);
+                    }
+                }
+                else
+                {
+                    // LZ: get length
+                    var lzLength = (b & 0x7f) + 3;
+                    // Get offset
+                    var lzOffset = compressed[offset++] + 1;
+                    // Copy data
+                    var sourceOffset = uncompressed.Count - lzOffset;
+                    // Sometimes it reaches past the start, and there we find FFs.
+                    while (sourceOffset < 0 && lzLength > 0)
+                    {
+                        uncompressed.Add(0xff);
+                        ++sourceOffset;
+                        --lzLength;
+                    }
+                    for (var i = 0; i < lzLength; ++i)
+                    {
+                        uncompressed.Add(uncompressed[sourceOffset++]);
+                    }
+                }
+            }
+
+            if (uncompressed.Count < 2)
+            {
+                // Some are not used?
+                return [0];
+            }
+
+            // The first two bytes are the length, we truncate to whatever that is.
+            var length = uncompressed[0] + uncompressed[1] * 256;
+
+            data = uncompressed.Skip(2).Take(length);
+
+            // The code uses rld to get the low nibble out (twice), so it is big-endian.
+            return new FourBitBigEndianInterpreter().GetSamples(data);
+        }
+
+        public DataFormat OutputFormat => DataFormat.PSGAttenuation;
+
+        public override string ToString()
+        {
+            return "4-bit LZ (Madou Monogatari II-III)";
+        }
+    }
+
+    public class LZFourBitBigEndianInterpreterNoLength : IDataInterpreter
+    {
+        public IEnumerable<int> GetSamples(IEnumerable<byte> data)
+        {
+            // We decompress to another list, and then unpack that
+            var uncompressed = new List<byte>();
+
+            var compressed = data.ToList(); // So we can index into it
+            var offset = 0;
+
+            while (offset < compressed.Count)
+            {
+                // Get a byte
+                var b = compressed[offset++];
+                // Check for raw or LZ, or end
+                if (b == 0)
+                {
+                    break;
+                }
+                
+                if (b < 0x80)
+                {
+                    // Raw: copy that many bytes
+                    for (var i = 0; i < b; i++)
+                    {
+                        uncompressed.Add(compressed[offset++]);
+                    }
+                }
+                else
+                {
+                    // LZ: get length
+                    var lzLength = (b & 0x7f) + 3;
+                    // Get offset
+                    var lzOffset = compressed[offset++] + 1;
+                    // Copy data
+                    var sourceOffset = uncompressed.Count - lzOffset;
+                    // Sometimes it reaches past the start, and there we find FFs.
+                    while (sourceOffset < 0 && lzLength > 0)
+                    {
+                        uncompressed.Add(0xff);
+                        ++sourceOffset;
+                        --lzLength;
+                    }
+                    for (var i = 0; i < lzLength; ++i)
+                    {
+                        uncompressed.Add(uncompressed[sourceOffset++]);
+                    }
+                }
+            }
+
+            if (uncompressed.Count < 2)
+            {
+                // Some are not used?
+                return [0];
+            }
+
+            // The code uses rld to get the low nibble out (twice), so it is big-endian.
             return new FourBitBigEndianInterpreter().GetSamples(uncompressed);
         }
 
@@ -329,8 +482,7 @@ namespace SampleToWav
 
         public override string ToString()
         {
-            return "4-bit RLE";
+            return "4-bit LZ without length prefix (Madou Monogatari A)";
         }
     }
-
 }
